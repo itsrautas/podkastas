@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT SRAUTAS - naujausios IT tendencijos ir technologijų naujienos.">
+  <title>IT SRAUTAS Podcast</title>
+  <!-- Font Awesome ikonos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Bendras dizainas */
+    body {
+      background-color: #121212;
+      color: #FFFFFF;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    /* Light mode stilius */
+    body.light-mode {
+      background-color: #FFFFFF;
+      color: #000;
+    }
+    body.light-mode .hero-section,
+    body.light-mode .podcast-container,
+    body.light-mode footer {
+      background-color: #f0f0f0;
+    }
+    body.light-mode .hero-section p {
+      color: #000;
+    }
+    body.light-mode .social-icons a {
+      color: #0077CC;
+    }
+    body.light-mode .social-icons a:hover {
+      color: #005599;
+    }
+    body.light-mode .latest-episode {
+      background-color: #0077CC;
+      color: #fff;
+    }
+    body.light-mode .podcast-card {
+      background-color: #E0E0E0;
+      color: #000;
+    }
+    body.light-mode .podcast-card h3 {
+      color: #3399FF;
+    }
+    body.light-mode footer {
+      border-top-color: #0077CC;
+    }
+    
+    /* Dark/light mode toggle mygtukas */
+    #mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #0099FF;
+      border: none;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+    #mode-toggle:hover {
+      background: #0077CC;
+    }
+    
+    /* Scroll-to-top mygtukas */
+    #scrollToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 153, 255, 0.7);
+      border: none;
+      color: #fff;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+    #scrollToTop:hover {
+      background: rgba(0, 153, 255, 0.9);
+    }
+    
+    /* Hero sekcija */
+    .hero-section {
+      background-color: #1A1A1A;
+      padding: 80px 20px;
+      text-align: center;
+      border-bottom: 5px solid #0099FF;
+      position: relative;
+    }
+    .hero-section img {
+      max-width: 160px;
+      height: auto;
+    }
+    .hero-section p {
+      font-size: 1.4em;
+      margin: 30px 0;
+    }
+    .social-icons {
+      margin-top: 30px;
+    }
+    .social-icons a {
+      color: #0099FF;
+      font-size: 2em;
+      margin: 0 10px;
+      transition: color 0.3s ease, transform 0.2s;
+    }
+    .social-icons a:hover {
+      color: #66ccff;
+      transform: scale(1.1);
+    }
+    
+    /* Podcastų sąrašas */
+    .podcast-container {
+      padding: 50px 20px;
+      text-align: center;
+      background-color: #1A1A1A;
+    }
+    .latest-episode {
+      background-color: #0066CC;
+      color: #FFFFFF;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px auto;
+      max-width: 700px;
+      text-align: left;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s ease-in-out;
+      position: relative;
+    }
+    .latest-episode img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .latest-episode h3 {
+      font-size: 1.8em;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .latest-episode p {
+      font-size: 1.1em;
+      color: #fff;
+    }
+    .new-label {
+      background-color: #ff4444;
+      color: #fff;
+      padding: 5px 10px;
+      display: inline-block;
+      border-radius: 5px;
+      font-size: 0.9em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .podcast-card {
+      background-color: #2C2C2C;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 600px;
+      text-align: left;
+      box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      transition: transform 0.2s;
+      position: relative;
+    }
+    .podcast-card:hover {
+      transform: scale(1.02);
+    }
+    .podcast-card img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+      height: 250px;
+    }
+    .podcast-card h3 {
+      color: #99ccff;
+      font-size: 1.5em;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .podcast-card p {
+      font-size: 1em;
+      color: #D1D1D1;
+    }
+    .podcast-card .date {
+      font-size: 0.9em;
+      color: #A3A3A3;
+      margin-top: 5px;
+    }
+    
+    .play-button {
+      background-color: #0099FF;
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .play-button:hover {
+      background-color: #0077CC;
+    }
+    
+    .audio-controls {
+      display: none;
+      margin-top: 10px;
+      width: 100%;
+    }
+    
+    .load-more-btn {
+      background-color: #0099FF;
+      color: white;
+      border: none;
+      padding: 15px 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+    .load-more-btn:hover {
+      background-color: #0077CC;
+    }
+    
+    footer {
+      background-color: #1A1A1A;
+      color: #FFFFFF;
+      padding: 30px 20px;
+      text-align: center;
+      border-top: 5px solid #0099FF;
+    }
+    footer p {
+      margin: 0;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dark/Light mode toggle -->
+  <button id="mode-toggle" onclick="toggleMode()">Dark/Light</button>
+  
+  <!-- Scroll-to-top mygtukas -->
+  <button id="scrollToTop" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Hero sekcija -->
+  <section class="hero-section">
+    <img src="https://example.com/itsrauto-logo.png" alt="IT SRAUTAS Podcast Logo">
+    <p>Atraskite naujausias IT tendencijas, kibernetinio saugumo įžvalgas ir technologijų pasaulio naujienas su IT SRAUTAS Podcast!</p>
+    <div class="social-icons">
+      <a href="https://spotify.com" target="_blank"><i class="fab fa-spotify"></i></a>
+      <a href="https://music.apple.com" target="_blank"><i class="fab fa-apple"></i></a>
+      <a href="https://podcasts.google.com" target="_blank"><i class="fab fa-google"></i></a>
+      <a href="https://youtube.com/@ITsrautas" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+  </section>
+
+  <!-- Podcastų sąrašas -->
+  <section class="podcast-container" id="podcast-list">
+    <!-- Čia bus dinamiškai įkelti epizodai iš RSS -->
+  </section>
+
+  <div style="text-align: center;">
+    <button class="load-more-btn" id="load-more-btn" onclick="loadMore()">Įkelti daugiau</button>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 IT SRAUTAS. Visi teisės saugomi.</p>
+  </footer>
+
+  <script>
+    // RSS feed URL
+    const RSS_URL = "https://feeds.redcircle.com/9a3d0e49-d9e3-4572-ae49-904a5c17b282";
+    let episodes = [];
+    let loadedCount = 0;
+    const episodesPerLoad = 10;
+    let currentAudio = null;
+    let currentIndex = null;
+
+    // Užkrauna epizodus iš RSS naudojant rss2json API
+    async function loadRSS() {
+      try {
+        let response = await fetch("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(RSS_URL));
+        let data = await response.json();
+        // Mapuojame gautus epizodus į reikiamą formatą
+        episodes = data.items.map(item => {
+          return {
+            title: item.title,
+            desc: item.description,
+            img: item.thumbnail || "",
+            // Naudojame enclosure, jei yra, kaip audio; jei ne – naudokite kitą lauką
+            audio: item.enclosure ? item.enclosure.link : "",
+            // YouTube nuoroda – jei feed'e nėra, galima naudoti item.link arba nustatyti alternatyvą
+            youtube: item.link,
+            date: new Date(item.pubDate)
+          };
+        });
+        // Surikiuojame pagal datą (naujausi pirmiausia)
+        episodes.sort((a, b) => b.date - a.date);
+        loadMore();
+        // Jei epizodų mažiau nei 11, paslėpiame "Įkelti daugiau" mygtuką
+        if (episodes.length < 11) {
+          document.getElementById("load-more-btn").style.display = "none";
+        }
+      } catch (error) {
+        console.error("Klaida kraunant RSS:", error);
+      }
+    }
+
+    // Sukuria epizodo kortelę su interaktyviu audio paleidimo mygtuku
+    function createPodcastCard(episode, index) {
+      let card = document.createElement("div");
+      // Pirmasis epizodas išskirtinis
+      if (index === 0 && loadedCount === 0) {
+        card.className = "latest-episode";
+      } else {
+        card.className = "podcast-card";
+      }
+      card.innerHTML = `
+        ${index === 0 && loadedCount === 0 ? '<span class="new-label">Naujas epizodas</span>' : ''}
+        <img src="${episode.img}" alt="${episode.title}">
+        <h3>
+          <span onclick="window.open('${episode.youtube}', '_blank')">${episode.title}</span>
+          <button class="play-button" onclick="event.stopPropagation(); toggleAudio(${index});">
+            <i class="fas fa-play"></i>
+          </button>
+        </h3>
+        <p>${episode.desc}</p>
+        <p class="date">${episode.date.toLocaleDateString()}</p>
+        <audio class="audio-controls" id="audio-${index}" style="display: none;" controls>
+          <source src="${episode.audio}" type="audio/mp3">
+          Jūsų naršyklė nepalaiko garso leistuvo.
+        </audio>
+      `;
+      return card;
+    }
+
+    // Įkelia epizodus po 10 vienu metu
+    function loadMore() {
+      let container = document.getElementById("podcast-list");
+      for (let i = loadedCount; i < loadedCount + episodesPerLoad && i < episodes.length; i++) {
+        let episode = episodes[i];
+        let card = createPodcastCard(episode, i);
+        container.appendChild(card);
+      }
+      loadedCount += episodesPerLoad;
+      if (loadedCount >= episodes.length) {
+        document.getElementById("load-more-btn").style.display = "none";
+      }
+    }
+
+    // Audio paleidimo/pauzės funkcija – užtikrina, kad vienu metu grotų tik vienas epizodas
+    function toggleAudio(index) {
+      let audioElement = document.getElementById(`audio-${index}`);
+      let button = document.querySelectorAll(".play-button")[index];
+      let icon = button.querySelector("i");
+
+      if (currentAudio && currentAudio !== audioElement) {
+        currentAudio.pause();
+        let prevButton = document.querySelectorAll(".play-button")[currentIndex];
+        if (prevButton) {
+          prevButton.querySelector("i").classList.replace("fa-pause", "fa-play");
+        }
+        currentAudio.style.display = "none";
+      }
+
+      if (audioElement.paused) {
+        audioElement.style.display = "block";
+        audioElement.play();
+        icon.classList.replace("fa-play", "fa-pause");
+        currentAudio = audioElement;
+        currentIndex = index;
+      } else {
+        audioElement.pause();
+        icon.classList.replace("fa-pause", "fa-play");
+        audioElement.style.display = "none";
+        currentAudio = null;
+        currentIndex = null;
+      }
+    }
+
+    // Dark/Light mode keitimo funkcija
+    function toggleMode() {
+      document.body.classList.toggle("light-mode");
+      // Galite išsaugoti parinktį localStorage, jei norite
+    }
+
+    // Scroll-to-top funkcija
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Rodyti scroll-to-top mygtuką, kai slenkama puslapio apačioje
+    window.onscroll = function() {
+      let btn = document.getElementById("scrollToTop");
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+    };
+
+    // Užkrauna epizodus iš RSS srauto
+    loadRSS();
+  </script>
+
+</body>
+</html>
